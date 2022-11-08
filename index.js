@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const glob = require("glob");
 const plist = require('plist');
-const cp_maxBuffer = 1024 * 1024 * 30;
 
 
 function npmI(installFolder) {
@@ -18,6 +17,7 @@ function npmI(installFolder) {
     return runNpmCommand(['i']);
 }
 
+// e.g. runNpmCommand(['run', 'start']);
 function runNpmCommand(npmCommandList) {
     let build = cp.spawn(getNpm(process.platform), npmCommandList);
     return setProcessPromise(build);
@@ -32,6 +32,13 @@ function deleteFolderRecursive(directory) {
     }
 
     fs.mkdirSync(directory);
+}
+
+
+function runCpExec(execStr) {
+    const cp_maxBuffer = 1024 * 1024 * 30;
+    let process = cp.exec(execStr, { maxBuffer: cp_maxBuffer });
+    return setProcessPromise(process, true);
 }
 
 
@@ -90,5 +97,6 @@ module.exports = {
     deleteFolderRecursive,
     npmI,
     setProcessPromise, // for test
-    getNpm
+    getNpm,
+    runCpExec
 };

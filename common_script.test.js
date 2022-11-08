@@ -35,3 +35,8 @@ test('getNpm', () => {
 })
 
 
+test('run echo', () => {
+    common_script.runCpExec('echo 11');
+})
+
+
