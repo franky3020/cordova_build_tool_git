@@ -1,1 +1,4 @@
-# cordova_build_tool_git
+
+npm run test
+npm publish --access public
+
